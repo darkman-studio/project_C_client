@@ -9,19 +9,36 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 public class GollaListViewAdapter extends ArrayAdapter<GollaPost>{
+    private LayoutInflater mInflater;
 
-	LayoutInflater inflater = null;
-	public GollaListViewAdapter(Context context, int resource) {
+    public GollaListViewAdapter(Context context, int resource) {
 		super(context, resource);
-		inflater = LayoutInflater.from(context);
+		mInflater = LayoutInflater.from(context);
+	}
+	
+	@Override
+	public int getItemViewType(int position) {
+		GollaPost item = getItem(position);
+		return item.getPostType();
 	}
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.list_item_post, parent);
+			convertView = mInflater.inflate(R.layout.list_item_post, parent);
 		}
-		// TODO Auto-generated method stub
+
+		int type = getItemViewType(position);
+		switch (type) {
+		case GollaPost.POST_TYPE_VOTE:
+			break;
+
+		case GollaPost.POST_TYPE_VOTED:
+			break;
+
+		default:
+			break;
+		}
 		return super.getView(position, convertView, parent);
 	}
 }
